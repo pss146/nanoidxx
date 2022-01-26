@@ -30,20 +30,24 @@ jobs:
     - name: Conan version
       run: echo "Conan version was '${{ steps.conan.outputs.version }}'"
 
-    #- name: Prepare build folder
-    #  run: mkdir build && cd build
+    - name: Prepare build folder
+      working-directory: ${{github.workspace}}
+      run: mkdir build
 
     - name: Conan install
-      run: conan install . --install-folder ${{github.workspace}}/build && dir ${{github.workspace}}/build
+      working-directory: ${{github.workspace}}/build
+      run: conan install ..
 
     - name: Configure CMake
+      working-directory: ${{github.workspace}}/build
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: cmake .. -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
+      working-directory: ${{github.workspace}}/build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build . --config ${{env.BUILD_TYPE}}
 
     - name: Test
       working-directory: ${{github.workspace}}/build
