@@ -22,6 +22,4 @@ target_include_directories(nanoid INTERFACE
 
 ### TESTS
 enable_testing()
-if (BUILD_TESTING)
-    add_subdirectory(tests)
-endif ()
+add_subdirectory(tests)
