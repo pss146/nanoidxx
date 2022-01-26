@@ -1,4 +1,6 @@
 #include <catch2/catch.hpp>
+#include <iostream>
+
 #include "nanoid/nanoid.h"
 
 TEST_CASE("Random IDs") {
@@ -28,5 +30,13 @@ TEST_CASE("Valid generation") {
 
     for (auto ch: id1) {
         REQUIRE(alphabet.find(ch) != std::string::npos);
+    }
+}
+
+TEST_CASE("Multiple IDs generation") {
+    nanoid::NanoId id;
+
+    for (auto i = 0; i < 20; i++) {
+        std::cout << "Generated Id: " << id.generate(8) << std::endl;
     }
 }

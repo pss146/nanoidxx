@@ -10,12 +10,12 @@ endif ()
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-add_library(nanoid STATIC src/nanoid.cpp)
+add_library(nanoid INTERFACE)
 add_library(pss146::nanoid ALIAS nanoid)    # Alias
 
 target_link_libraries(nanoid ${CONAN_LIBS})
 
-target_include_directories(nanoid PUBLIC
+target_include_directories(nanoid INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
         )
