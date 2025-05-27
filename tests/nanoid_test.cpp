@@ -1,7 +1,7 @@
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <iostream>
 
-#include "nanoid/nanoid.h"
+#include <nanoid/nanoid.h>
 
 TEST_CASE("Random IDs") {
     nanoid::NanoId gen;

@@ -20,6 +20,8 @@ conanbuildinfo.txt
 build/*
 cmake-*/*
 
-
 # IDE
 .idea/*
+
+#Conan
+/CMakeUserPresets.json

@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import os
-from conans import ConanFile, tools, CMake
+from conan import ConanFile
+from conan.tools.files import copy
+from conan.tools.cmake import cmake_layout, CMake
 
 class NanoIdXXConan(ConanFile):
     name = "nanoidxx"
@@ -15,27 +17,34 @@ class NanoIdXXConan(ConanFile):
     license = "MIT"
     
     settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake"
 
-    def export_sources(self):
-        self.copy("*")  # -> copies all files/folders from working dir into a “source” directory
+    exports_sources = "include/*", "tests/*"
+    no_copy_source = True
+    generators = "CMakeToolchain", "CMakeDeps"
+    # Important, define the package_type
+    package_type = "header-library"
 
     def requirements(self):
-      self.requires.add("catch2/2.13.7")
-    
-    def configure_cmake(self):
-        cmake = CMake(self)
-        cmake.configure()
-        return cmake
+      self.requires("catch2/3.8.1")
+
+    def layout(self):
+        cmake_layout(self)
 
     def build(self):
-        cmake = self.configure_cmake()
+        cmake = CMake(self)
+        cmake.configure(build_script_folder="tests")
         cmake.build()
         cmake.test()
 
     def package(self):
-        # Copy headers to the include folder and libraries to the lib folder
-        self.copy("*.h", dst="include", src="include")
+        # This will also copy the "include" folder
+        copy(self, "*.h", self.source_folder, self.package_folder)
+
+    def package_info(self):
+        # For header-only packages, libdirs and bindirs are not used
+        # so it's necessary to set those as empty.
+        self.cpp_info.bindirs = []
+        self.cpp_info.libdirs = []
 
     def package_id(self):
-        self.info.header_only()
+        self.info.clear()

@@ -1,5 +1,6 @@
-#include <catch2/catch.hpp>
-#include "nanoid/nanoid.h"
+#include <catch2/catch_test_macros.hpp>
+
+#include <nanoid/nanoid.h>
 
 TEST_CASE("Random Int") {
     nanoid::RandomGenerator rg;
