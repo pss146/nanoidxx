@@ -37,6 +37,7 @@ jobs:
         else
           echo "conan-release" >> $CONAN_PRESET
         fi
+      shell: bash
 
     - name: Conan profile
       working-directory: ${{github.workspace}}
