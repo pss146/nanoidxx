@@ -36,7 +36,7 @@ jobs:
 
     - name: Conan install
       working-directory: ${{github.workspace}}
-      run: conan install . --build=missing
+      run: conan install . --build=missing -s build_type=Release
 
     - name: CMake preset
       working-directory: ${{github.workspace}}
