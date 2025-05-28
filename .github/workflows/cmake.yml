@@ -30,9 +30,9 @@ jobs:
     - name: Conan version
       run: echo "Conan version was '${{ steps.conan.outputs.version }}'"
 
-    # - name: Prepare build folder
-    #   working-directory: ${{github.workspace}}
-    #   run: mkdir build
+    - name: Conan profile
+      working-directory: ${{github.workspace}}
+      run: conan profile detect
 
     - name: Conan install
       working-directory: ${{github.workspace}}
