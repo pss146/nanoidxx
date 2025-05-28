@@ -19,6 +19,9 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
+    env:
+      CONAN_PRESET: ${{ matrix.os == 'windows-2019' && 'conan-default' || 'conan-release' }}
+
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -29,15 +32,6 @@ jobs:
 
     - name: Conan version
       run: echo "Conan version was '${{ steps.conan.outputs.version }}'"
-
-    - name: Set dynamic variable
-      run: |
-        if [ "$RUNNER_OS" == "Windows" ]; then
-          echo "conan-default" >> $CONAN_PRESET
-        else
-          echo "conan-release" >> $CONAN_PRESET
-        fi
-      shell: bash
 
     - name: Conan profile
       working-directory: ${{github.workspace}}
